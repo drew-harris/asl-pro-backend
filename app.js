@@ -1,18 +1,20 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+var cors = require("cors");
 
 require("dotenv").config();
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 init();
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 3000;
 
 async function init() {
   await client.connect();
 }
 
-app.get("/", async (req, res) => {
+app.get("/aslapi", async (req, res) => {
   try {
     const cursor = await client
       .db("prod")
@@ -25,7 +27,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/tag/:tag", async (req, res) => {
+app.get("/aslapi/tag/:tag", async (req, res) => {
   try {
     const cursor = await client
       .db("prod")
@@ -38,7 +40,7 @@ app.get("/tag/:tag", async (req, res) => {
   }
 });
 
-app.get("/tags", async (req, res) => {
+app.get("/aslapi/tags", async (req, res) => {
   try {
     const cursor = await client
       .db("prod")
